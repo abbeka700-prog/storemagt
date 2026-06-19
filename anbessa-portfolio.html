@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbessa Bus App — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#D62828;
+  --red2:#B71C1C;
+  --red3:#7f0000;
+  --yellow:#FFC300;
+  --yellow2:#e6a800;
+  --yellow3:#fff8dc;
+  --bg:#0a0000;
+  --bg2:#120000;
+  --bg3:#1c0000;
+  --bg4:#240606;
+  --white:#ffffff;
+  --font:'Space Grotesk',sans-serif;
+  --mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--white);overflow-x:hidden}
+
+/* ── CURSOR GLOW ── */
+.cursor-glow{
+  position:fixed;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(214,40,40,0.08) 0%,transparent 70%);
+  pointer-events:none;z-index:0;transform:translate(-50%,-50%);
+  transition:opacity 0.3s;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 3rem;
+  background:rgba(10,0,0,0.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(214,40,40,0.25);
+  transition:padding 0.3s;
+}
+nav.scrolled{padding:0.7rem 3rem;border-bottom-color:rgba(214,40,40,0.4)}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:1.1rem;font-weight:700;color:var(--yellow);
+  text-decoration:none;letter-spacing:-0.02em;
+}
+.logo-mark{
+  width:34px;height:34px;background:var(--red);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;transform:rotate(-5deg);
+  box-shadow:0 0 20px rgba(214,40,40,0.5);
+  transition:transform 0.3s,box-shadow 0.3s;
+}
+.nav-logo:hover .logo-mark{transform:rotate(0deg);box-shadow:0 0 30px rgba(214,40,40,0.8)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:rgba(255,255,255,0.6);text-decoration:none;
+  font-size:0.85rem;font-weight:500;letter-spacing:0.02em;
+  position:relative;padding-bottom:2px;transition:color 0.2s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:var(--yellow);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s;
+}
+.nav-links a:hover{color:var(--yellow)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  background:var(--red);color:white;padding:8px 20px;border-radius:6px;
+  font-size:0.82rem;font-weight:600;text-decoration:none;
+  transition:all 0.2s;border:1px solid transparent;
+}
+.nav-cta:hover{background:transparent;border-color:var(--red);color:var(--red)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;overflow:hidden;
+}
+#hero-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:1;
+}
+.hero-left{
+  position:relative;z-index:10;
+  padding:0 4rem;padding-top:90px;
+  max-width:55%;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--yellow);margin-bottom:1.75rem;
+  padding:5px 14px;border:1px solid rgba(255,195,0,0.3);border-radius:100px;
+  animation:fadeSlideUp 0.8s ease both 0.2s;
+}
+.pulse{
+  width:6px;height:6px;border-radius:50%;background:var(--red);
+  animation:pulseDot 1.8s ease-in-out infinite;
+}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.6)}}
+
+.hero-title{
+  font-size:clamp(3.2rem,5.5vw,5.5rem);font-weight:700;
+  line-height:0.95;letter-spacing:-0.04em;margin-bottom:1.5rem;
+  animation:fadeSlideUp 0.8s ease both 0.4s;
+}
+.hero-title .t1{display:block;color:rgba(255,255,255,0.9)}
+.hero-title .t2{display:block;color:var(--red);text-shadow:0 0 60px rgba(214,40,40,0.4)}
+.hero-title .t3{display:block;color:var(--yellow)}
+.hero-sub{
+  font-size:1rem;color:rgba(255,255,255,0.5);line-height:1.75;
+  max-width:460px;margin-bottom:2.5rem;
+  animation:fadeSlideUp 0.8s ease both 0.6s;
+}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeSlideUp 0.8s ease both 0.8s;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--red);color:white;font-weight:700;
+  font-size:0.9rem;padding:13px 26px;border-radius:8px;
+  text-decoration:none;transition:all 0.25s;
+  box-shadow:0 0 30px rgba(214,40,40,0.35);
+}
+.btn-primary:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 0 50px rgba(214,40,40,0.5)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;color:var(--yellow);font-weight:600;
+  font-size:0.9rem;padding:13px 26px;border-radius:8px;
+  border:1px solid rgba(255,195,0,0.4);text-decoration:none;transition:all 0.25s;
+}
+.btn-outline:hover{background:rgba(255,195,0,0.08);border-color:var(--yellow)}
+
+.hero-scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:rgba(255,255,255,0.25);
+  animation:scrollBounce 2.5s ease-in-out infinite;
+}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,rgba(214,40,40,0.7),transparent)}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  overflow:hidden;background:var(--red);padding:10px 0;
+  border-top:1px solid rgba(255,195,0,0.3);border-bottom:1px solid rgba(255,195,0,0.3);
+}
+.ticker-track{display:flex;width:max-content;animation:ticker 30s linear infinite}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:12px;padding:0 2rem;
+  white-space:nowrap;font-family:var(--mono);font-size:0.68rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.9);
+}
+.tsep{color:var(--yellow);font-size:1rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SHARED ── */
+section{padding:6rem 3rem;position:relative;z-index:5}
+.section-inner{max-width:1000px;margin:0 auto}
+.sec-label{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--red);margin-bottom:0.75rem;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--red)}
+.sec-title{
+  font-size:clamp(2rem,3.5vw,3rem);font-weight:700;
+  letter-spacing:-0.03em;line-height:1.1;color:var(--white);
+  margin-bottom:1rem;
+}
+.sec-body{font-size:0.97rem;color:rgba(255,255,255,0.45);line-height:1.75;max-width:560px}
+.divider{border:none;border-top:1px solid rgba(214,40,40,0.12);margin:0}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.75s cubic-bezier(.4,0,.2,1),transform 0.75s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+.rd1{transition-delay:0.1s}.rd2{transition-delay:0.2s}.rd3{transition-delay:0.3s}.rd4{transition-delay:0.4s}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3.5rem}
+.about-canvas-wrap{
+  position:relative;aspect-ratio:1;
+  background:var(--bg3);border:1px solid rgba(214,40,40,0.15);border-radius:20px;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+#lion-canvas{width:100%;height:100%;display:block}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.stat{
+  background:var(--bg3);border:1px solid rgba(214,40,40,0.15);border-radius:12px;
+  padding:1.25rem;transition:border-color 0.3s,transform 0.3s;
+}
+.stat:hover{border-color:rgba(214,40,40,0.4);transform:translateY(-3px)}
+.stat-n{font-size:2rem;font-weight:700;color:var(--yellow);font-family:var(--mono);letter-spacing:-0.05em}
+.stat-l{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:3px;text-transform:uppercase;letter-spacing:0.1em}
+
+/* ── PROJECT ── */
+#project{background:var(--bg)}
+.proj-card{
+  margin-top:3rem;border:1px solid rgba(214,40,40,0.2);border-radius:20px;
+  overflow:hidden;background:var(--bg2);
+  transition:border-color 0.3s;
+}
+.proj-card:hover{border-color:rgba(214,40,40,0.45)}
+.proj-top{display:grid;grid-template-columns:1.2fr 1fr;align-items:stretch;min-height:420px}
+.proj-info{padding:3rem;display:flex;flex-direction:column;justify-content:space-between}
+.proj-badge{
+  display:inline-flex;align-items:center;gap:7px;width:fit-content;
+  background:rgba(214,40,40,0.15);color:var(--red);
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 12px;border-radius:100px;border:1px solid rgba(214,40,40,0.3);
+  margin-bottom:1.25rem;
+}
+.proj-name{font-size:2.4rem;font-weight:700;letter-spacing:-0.04em;line-height:1.05;margin-bottom:1rem}
+.proj-name em{color:var(--yellow);font-style:normal}
+.proj-desc{font-size:0.92rem;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:2rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  font-family:var(--mono);font-size:0.63rem;letter-spacing:0.06em;
+  color:rgba(255,195,0,0.75);background:rgba(255,195,0,0.08);
+  padding:5px 11px;border-radius:100px;border:1px solid rgba(255,195,0,0.15);
+}
+.proj-mockup{
+  background:var(--bg3);border-left:1px solid rgba(214,40,40,0.1);
+  display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden;
+}
+/* phone */
+.phone{width:185px;background:#0d0000;border-radius:34px;border:2.5px solid rgba(255,255,255,0.08);overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.7),0 0 60px rgba(214,40,40,0.15);position:relative;z-index:2}
+.p-notch{height:22px;background:#0d0000;display:flex;align-items:center;justify-content:center}
+.p-notch-bar{width:55px;height:7px;background:#1a0000;border-radius:100px}
+.p-screen{background:#fff8dc;min-height:340px}
+.p-header{background:var(--red);padding:10px 12px;display:flex;align-items:center;gap:8px}
+.p-hicon{font-size:18px}
+.p-htitle{font-size:10px;font-weight:700;color:white}
+.p-hsub{font-size:7px;color:rgba(255,255,255,0.7)}
+.p-body{padding:8px}
+.p-search{background:white;border-radius:8px;padding:6px 10px;display:flex;align-items:center;gap:6px;margin-bottom:8px;border:1.5px solid rgba(214,40,40,0.2)}
+.p-stext{font-size:7.5px;color:#aaa}
+.p-map{height:75px;background:#e8f4e0;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.p-rcard{background:white;border-radius:7px;padding:7px 9px;margin-bottom:5px;display:flex;align-items:center;gap:7px;border-left:3px solid var(--red)}
+.p-rnum{width:22px;height:22px;border-radius:5px;background:var(--red);color:white;font-size:8px;font-weight:700;font-family:monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.p-ri{flex:1}
+.p-rn{font-size:8px;font-weight:600;color:#111}
+.p-rs{font-size:6.5px;color:#888;margin-top:1px}
+.p-rt{font-family:monospace;font-size:8px;color:var(--red);font-weight:700}
+
+.proj-features{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(214,40,40,0.08);
+  border-top:1px solid rgba(214,40,40,0.15);
+}
+.feat{background:var(--bg2);padding:1.5rem;transition:background 0.2s}
+.feat:hover{background:var(--bg3)}
+.feat-ico{font-size:1.3rem;width:38px;height:38px;background:rgba(214,40,40,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.feat-name{font-size:0.88rem;font-weight:600;color:var(--white);margin-bottom:5px}
+.feat-desc{font-size:0.78rem;color:rgba(255,255,255,0.38);line-height:1.55}
+
+/* ── PROCESS ── */
+#process{background:var(--bg2)}
+.process-wrap{margin-top:3.5rem;position:relative}
+.process-line{
+  position:absolute;top:48px;left:48px;right:48px;height:2px;
+  background:linear-gradient(to right,var(--red),var(--yellow),var(--red));
+  opacity:0.25;z-index:0;
+}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative;z-index:1}
+.step{
+  background:var(--bg3);border:1px solid rgba(214,40,40,0.12);border-radius:16px;
+  padding:2rem 1.5rem;transition:all 0.35s;cursor:default;
+}
+.step:hover{
+  border-color:rgba(214,40,40,0.5);
+  transform:translateY(-8px);
+  box-shadow:0 20px 60px rgba(214,40,40,0.15);
+}
+.step-ico{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(214,40,40,0.15);border:1px solid rgba(214,40,40,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1.25rem;
+  transition:background 0.3s;
+}
+.step:hover .step-ico{background:rgba(214,40,40,0.3)}
+.step-n{font-family:var(--mono);font-size:0.62rem;color:var(--red);letter-spacing:0.12em;margin-bottom:0.5rem}
+.step-t{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:0.5rem}
+.step-b{font-size:0.8rem;color:rgba(255,255,255,0.38);line-height:1.6}
+.step-tech{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;
+  color:var(--yellow);background:rgba(255,195,0,0.1);
+  padding:3px 9px;border-radius:100px;border:1px solid rgba(255,195,0,0.2);
+  margin-top:0.75rem;
+}
+
+/* ── TECH ── */
+#tech{background:var(--bg)}
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin-top:3rem}
+.tech-item{
+  background:var(--bg2);border:1px solid rgba(255,255,255,0.05);
+  border-radius:14px;padding:1.4rem 1rem;text-align:center;
+  transition:all 0.25s;cursor:default;position:relative;overflow:hidden;
+}
+.tech-item::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(214,40,40,0.12),transparent 70%);
+  opacity:0;transition:opacity 0.3s;
+}
+.tech-item:hover{border-color:rgba(214,40,40,0.35);transform:translateY(-5px);box-shadow:0 16px 50px rgba(214,40,40,0.12)}
+.tech-item:hover::before{opacity:1}
+.tlogo{font-size:2rem;margin-bottom:9px}
+.tname{font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.8)}
+.trole{font-size:0.65rem;color:rgba(255,255,255,0.3);margin-top:3px;font-family:var(--mono);letter-spacing:0.05em}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg2);text-align:center}
+#contact-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0.5}
+.contact-inner{position:relative;z-index:5;max-width:540px;margin:0 auto}
+.contact-bus{width:110px;margin:0 auto 2rem;filter:drop-shadow(0 0 20px rgba(214,40,40,0.4))}
+.contact-email{
+  display:inline-block;font-family:var(--mono);font-size:1rem;
+  color:var(--yellow);text-decoration:none;
+  border-bottom:1px solid rgba(255,195,0,0.3);padding-bottom:2px;
+  margin:1.5rem 0 2.5rem;transition:border-color 0.2s;
+}
+.contact-email:hover{border-color:var(--yellow)}
+.socials{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.soc{
+  display:flex;align-items:center;gap:8px;padding:10px 20px;
+  border:1px solid rgba(255,255,255,0.1);border-radius:8px;
+  color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.83rem;
+  transition:all 0.2s;
+}
+.soc:hover{border-color:rgba(214,40,40,0.5);color:var(--red);background:rgba(214,40,40,0.06)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg);padding:1.5rem 3rem;
+  border-top:1px solid rgba(214,40,40,0.12);
+  display:flex;align-items:center;justify-content:space-between;position:relative;z-index:5;
+}
+.foot-logo{font-size:0.85rem;color:rgba(255,255,255,0.25)}
+.foot-logo span{color:var(--yellow)}
+.foot-copy{font-family:var(--mono);font-size:0.65rem;color:rgba(255,255,255,0.18)}
+
+/* ── FLOATING PARTICLES ── */
+.particle{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:1;
+  animation:particleFloat linear infinite;
+}
+@keyframes particleFloat{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:0.6}
+  100%{transform:translateY(-100px) scale(1);opacity:0}
+}
+
+/* glow accent behind headings */
+.glow-accent{
+  position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(214,40,40,0.07),transparent 70%);
+  pointer-events:none;
+}
+
+@media(max-width:900px){
+  .about-grid,.proj-top{grid-template-columns:1fr}
+  .proj-mockup{display:none}
+  .proj-features{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .process-line{display:none}
+  .hero-left{max-width:100%;padding:0 1.5rem;padding-top:90px}
+  nav{padding:1rem 1.25rem}
+  .nav-links,.nav-cta{display:none}
+  section{padding:4rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cg"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="logo-mark">🦁</div>
+    <span>Anbessa<span style="color:rgba(255,255,255,0.3);font-weight:400">.dev</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#project">Project</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#tech">Tech</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-left">
+    <div class="hero-eyebrow"><div class="pulse"></div>Building in Addis Ababa · Ethiopia</div>
+    <h1 class="hero-title">
+      <span class="t1">Reimagining</span>
+      <span class="t2">Anbessa Bus</span>
+      <span class="t3">for Addis Ababa</span>
+    </h1>
+    <p class="hero-sub">A native Android app bringing real-time routes, live schedules, and smart navigation to the city's iconic yellow-and-red bus network — built in Java for 1,000,000 daily riders.</p>
+    <div class="hero-btns">
+      <a href="#project" class="btn-primary">
+        View the project
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#process" class="btn-outline">How it's built</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Route 02 — Piassa → Genet Hotel <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 45 — Merkato → CMC Road <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 78 — Bole → Megenagna <span class="tsep">◆</span></span>
+    <span class="ticker-item">1,000,000+ daily riders <span class="tsep">◆</span></span>
+    <span class="ticker-item">Founded 1945 · Addis Ababa <span class="tsep">◆</span></span>
+    <span class="ticker-item">አንበሳ — Built with Java &amp; XML <span class="tsep">◆</span></span>
+    <span class="ticker-item">1000+ buses in fleet <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 12 — Kazanchis → Stadium <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 02 — Piassa → Genet Hotel <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 45 — Merkato → CMC Road <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 78 — Bole → Megenagna <span class="tsep">◆</span></span>
+    <span class="ticker-item">1,000,000+ daily riders <span class="tsep">◆</span></span>
+    <span class="ticker-item">Founded 1945 · Addis Ababa <span class="tsep">◆</span></span>
+    <span class="ticker-item">አንበሳ — Built with Java &amp; XML <span class="tsep">◆</span></span>
+    <span class="ticker-item">1000+ buses in fleet <span class="tsep">◆</span></span>
+    <span class="ticker-item">Route 12 — Kazanchis → Stadium <span class="tsep">◆</span></span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="glow-accent" style="top:-200px;left:-200px"></div>
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="sec-label">About this project</p>
+      <h2 class="sec-title">The lion of Addis,<br>finally in your pocket.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="sec-body" style="margin-bottom:1.5rem">Anbessa City Bus has served Addis Ababa since 1945 — over 80 years moving the city. With 1,000+ buses and nearly 300 million annual rides, it's the backbone of daily life for millions.</p>
+        <p class="sec-body">Yet navigating it is still done by word-of-mouth. I'm building the native Android app that changes that: live routes, arrival times, and the full network — in Amharic and English.</p>
+        <div class="about-stats reveal rd1">
+          <div class="stat"><div class="stat-n">1M+</div><div class="stat-l">Daily riders</div></div>
+          <div class="stat"><div class="stat-n">1945</div><div class="stat-l">Founded</div></div>
+          <div class="stat"><div class="stat-n">1000+</div><div class="stat-l">Buses in fleet</div></div>
+          <div class="stat"><div class="stat-n">80+</div><div class="stat-l">Years of service</div></div>
+        </div>
+      </div>
+      <div class="about-canvas-wrap reveal rd2">
+        <canvas id="lion-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECT -->
+<section id="project">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="sec-label">The app — currently building</p>
+      <h2 class="sec-title">Anbessa Navigator</h2>
+      <p class="sec-body">Native Android transit companion for Addis Ababa's city bus network.</p>
+    </div>
+    <div class="proj-card reveal" style="margin-top:2.5rem">
+      <div class="proj-top">
+        <div class="proj-info">
+          <div>
+            <div class="proj-badge"><div class="pulse"></div>Active development</div>
+            <h3 class="proj-name">Anbessa<br><em>Navigator</em> App</h3>
+            <p class="proj-desc">A native Android app mapping every Anbessa bus route across Addis Ababa — built entirely in Java with XML layouts. Shows estimated arrivals, guides riders door-to-door, and works in Amharic and English for the city's 1 million daily commuters who currently rely on guesswork.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">XML Layouts</span>
+            <span class="tag">Android Studio</span>
+            <span class="tag">Google Maps API</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Room DB</span>
+            <span class="tag">Retrofit</span>
+            <span class="tag">Amharic UI</span>
+          </div>
+        </div>
+        <div class="proj-mockup">
+          <div style="position:absolute;inset:0;overflow:hidden;opacity:0.18">
+            <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <path d="M50 200 Q100 100 200 150 T350 200" fill="none" stroke="#D62828" stroke-width="2.5"/>
+              <path d="M50 250 Q150 200 250 260 T380 220" fill="none" stroke="#FFC300" stroke-width="2"/>
+              <path d="M30 150 Q200 80 370 150" fill="none" stroke="#D62828" stroke-width="1.5"/>
+              <circle cx="200" cy="150" r="8" fill="#D62828" opacity="0.8"/>
+              <circle cx="100" cy="100" r="5" fill="#FFC300"/>
+              <circle cx="300" cy="200" r="5" fill="#D62828"/>
+              <circle cx="200" cy="150" r="20" fill="none" stroke="#D62828" stroke-width="1.5" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="phone">
+            <div class="p-notch"><div class="p-notch-bar"></div></div>
+            <div class="p-screen">
+              <div class="p-header">
+                <div class="p-hicon">🦁</div>
+                <div><div class="p-htitle">Anbessa Navigator</div><div class="p-hsub">አንበሳ ናቪጌተር</div></div>
+              </div>
+              <div class="p-body">
+                <div class="p-search">
+                  <span style="font-size:9px;color:#999">🔍</span>
+                  <span class="p-stext">Where are you going?</span>
+                </div>
+                <div class="p-map">
+                  <svg viewBox="0 0 185 75" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="185" height="75" fill="#d4eac8"/>
+                    <rect x="0" y="28" width="185" height="7" fill="#c0d8b4"/>
+                    <path d="M10 10 Q60 40 130 20 T185 38" fill="none" stroke="#D62828" stroke-width="2.5"/>
+                    <path d="M0 52 Q80 32 165 55" fill="none" stroke="#FFC300" stroke-width="2"/>
+                    <circle cx="92" cy="28" r="5" fill="#D62828"/>
+                    <circle cx="92" cy="28" r="9" fill="none" stroke="#D62828" stroke-width="1.5" opacity="0.4"/>
+                  </svg>
+                </div>
+                <div class="p-rcard">
+                  <div class="p-rnum">02</div>
+                  <div class="p-ri"><div class="p-rn">Piassa → Genet Hotel</div><div class="p-rs">3 stops away</div></div>
+                  <div class="p-rt">4 min</div>
+                </div>
+                <div class="p-rcard" style="border-left-color:#FFC300">
+                  <div class="p-rnum" style="background:#FFC300;color:#111">45</div>
+                  <div class="p-ri"><div class="p-rn">Merkato → CMC</div><div class="p-rs">2 buses en route</div></div>
+                  <div class="p-rt" style="color:#e6a800">11 min</div>
+                </div>
+                <div class="p-rcard">
+                  <div class="p-rnum" style="background:#7f0000">78</div>
+                  <div class="p-ri"><div class="p-rn">Bole → Megenagna</div><div class="p-rs">Express</div></div>
+                  <div class="p-rt">18 min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-features">
+        <div class="feat">
+          <div class="feat-ico">🗺️</div>
+          <div class="feat-name">Live Route Map</div>
+          <div class="feat-desc">All bus lines on an interactive map via Google Maps SDK — real stop locations, route overlays.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">⏱️</div>
+          <div class="feat-name">Arrival Times</div>
+          <div class="feat-desc">GPS-based estimated arrivals with Firebase real-time sync and background notifications.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">🔤</div>
+          <div class="feat-name">Amharic First</div>
+          <div class="feat-desc">Full Amharic (አማርኛ) support with localised strings.xml — built for local riders from day one.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="sec-label">How I'm building it</p>
+      <h2 class="sec-title">The build process</h2>
+      <p class="sec-body">Pure native Android — Java and XML, built the right way from the ground up.</p>
+    </div>
+    <div class="process-wrap reveal">
+      <div class="process-line"></div>
+      <div class="process-steps">
+        <div class="step rd1">
+          <div class="step-ico">🗺️</div>
+          <div class="step-n">01 — Research</div>
+          <div class="step-t">Mapping the network</div>
+          <div class="step-b">Riding Anbessa buses to collect real route data, stop coordinates, and schedule patterns across Addis Ababa.</div>
+          <div class="step-tech">Field research</div>
+        </div>
+        <div class="step rd2">
+          <div class="step-ico">🎨</div>
+          <div class="step-n">02 — Design</div>
+          <div class="step-t">XML Layouts & UI</div>
+          <div class="step-b">Designing every screen in XML — ConstraintLayout, RecyclerViews, and custom views styled in Anbessa red and yellow.</div>
+          <div class="step-tech">Java · XML · Material Design</div>
+        </div>
+        <div class="step rd3">
+          <div class="step-ico">☕</div>
+          <div class="step-n">03 — Build</div>
+          <div class="step-t">Java + Android SDK</div>
+          <div class="step-b">Activities, Fragments, ViewModels, and LiveData architecture. Google Maps SDK for route overlays. Retrofit for API calls. Room DB for offline caching.</div>
+          <div class="step-tech">Java · Retrofit · Room · Firebase</div>
+        </div>
+        <div class="step rd4">
+          <div class="step-ico">🚀</div>
+          <div class="step-n">04 — Launch</div>
+          <div class="step-t">Play Store Pilot</div>
+          <div class="step-b">Starting with 10 core routes, beta testing with Addis commuters, then expanding to the full Anbessa network.</div>
+          <div class="step-tech">Google Play · APK testing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TECH -->
+<section id="tech">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="sec-label">Stack</p>
+      <h2 class="sec-title">Built with</h2>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-item reveal rd1"><div class="tlogo">☕</div><div class="tname">Java</div><div class="trole">Core language</div></div>
+      <div class="tech-item reveal rd1"><div class="tlogo">📐</div><div class="tname">XML</div><div class="trole">UI layouts</div></div>
+      <div class="tech-item reveal rd2"><div class="tlogo">🤖</div><div class="tname">Android SDK</div><div class="trole">Platform</div></div>
+      <div class="tech-item reveal rd2"><div class="tlogo">🗺️</div><div class="tname">Maps SDK</div><div class="trole">Route maps</div></div>
+      <div class="tech-item reveal rd3"><div class="tlogo">🔥</div><div class="tname">Firebase</div><div class="trole">Real-time data</div></div>
+      <div class="tech-item reveal rd3"><div class="tlogo">🗄️</div><div class="tname">Room DB</div><div class="trole">Offline cache</div></div>
+      <div class="tech-item reveal rd4"><div class="tlogo">🌐</div><div class="tname">Retrofit</div><div class="trole">HTTP client</div></div>
+      <div class="tech-item reveal rd4"><div class="tlogo">🎨</div><div class="tname">Figma</div><div class="trole">UI design</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <canvas id="contact-canvas"></canvas>
+  <div class="contact-inner">
+    <div class="reveal">
+      <svg class="contact-bus" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="14" width="100" height="36" rx="8" fill="#D62828"/>
+        <rect x="5" y="14" width="100" height="13" rx="6" fill="#B71C1C"/>
+        <rect x="10" y="17" width="20" height="9" rx="3" fill="rgba(255,255,255,0.5)"/>
+        <rect x="35" y="17" width="20" height="9" rx="3" fill="rgba(255,255,255,0.5)"/>
+        <rect x="60" y="17" width="20" height="9" rx="3" fill="rgba(255,255,255,0.5)"/>
+        <rect x="85" y="17" width="16" height="9" rx="3" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="25" cy="52" r="8" fill="#0d0000"/><circle cx="25" cy="52" r="4" fill="#1a0000"/>
+        <circle cx="85" cy="52" r="8" fill="#0d0000"/><circle cx="85" cy="52" r="4" fill="#1a0000"/>
+        <rect x="5" y="43" width="3" height="8" rx="1.5" fill="#FFC300"/>
+        <rect x="4" y="41" width="5" height="5" rx="1" fill="#FFC300"/>
+        <rect x="108" y="39" width="7" height="6" rx="1" fill="#FFC300"/>
+        <text x="60" y="40" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="700" fill="rgba(255,255,255,0.7)">ANBESSA</text>
+      </svg>
+      <p class="sec-label" style="justify-content:center">Get in touch</p>
+      <h2 class="sec-title" style="text-align:center">Interested in<br>what I'm building?</h2>
+      <p class="sec-body" style="margin:1rem auto;text-align:center">Whether you're a transit researcher, potential collaborator, or just curious about the Anbessa app — reach out.</p>
+      <div><a href="mailto:hello@anbessa.dev" class="contact-email">hello@anbessa.dev</a></div>
+      <div class="socials">
+        <a href="#" class="soc">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="#" class="soc">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="#" class="soc">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+          Twitter
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">🦁 <span>Anbessa</span>.dev — Addis Ababa, Ethiopia</div>
+  <div class="foot-copy">© 2025 · Built with Java ☕ for the city</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ────────────────────────────────────────────────
+   CURSOR GLOW
+──────────────────────────────────────────────── */
+const cg = document.getElementById('cg');
+document.addEventListener('mousemove', e => {
+  cg.style.left = e.clientX + 'px';
+  cg.style.top = e.clientY + 'px';
+});
+
+/* ────────────────────────────────────────────────
+   NAV SCROLL
+──────────────────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ────────────────────────────────────────────────
+   SCROLL REVEAL
+──────────────────────────────────────────────── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ────────────────────────────────────────────────
+   FLOATING PARTICLES
+──────────────────────────────────────────────── */
+(function spawnParticles() {
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    const isYellow = Math.random() > 0.6;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}vw;
+      background:${isYellow ? 'rgba(255,195,0,0.5)' : 'rgba(214,40,40,0.4)'};
+      animation-duration:${8 + Math.random()*12}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    document.body.appendChild(p);
+  }
+})();
+
+/* ────────────────────────────────────────────────
+   THREE.JS — HERO 3D BUS SCENE
+──────────────────────────────────────────────── */
+(function initHero3D() {
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(8, 4, 12);
+  camera.lookAt(0, 1, 0);
+
+  /* Lighting */
+  scene.add(new THREE.AmbientLight(0x1a0000, 1.5));
+  const dirL = new THREE.DirectionalLight(0xffc300, 2.5);
+  dirL.position.set(10, 10, 8);
+  dirL.castShadow = true;
+  scene.add(dirL);
+  const redL = new THREE.PointLight(0xd62828, 3, 25);
+  redL.position.set(-5, 3, 5);
+  scene.add(redL);
+  const yellowL = new THREE.PointLight(0xffc300, 2, 20);
+  yellowL.position.set(5, 5, -5);
+  scene.add(yellowL);
+
+  /* Materials */
+  const redMat = new THREE.MeshStandardMaterial({ color: 0xd62828, roughness: 0.3, metalness: 0.2 });
+  const yellowMat = new THREE.MeshStandardMaterial({ color: 0xffc300, roughness: 0.4, metalness: 0.1 });
+  const darkMat = new THREE.MeshStandardMaterial({ color: 0x0d0000, roughness: 0.8 });
+  const glassMat = new THREE.MeshStandardMaterial({ color: 0x88bbff, roughness: 0.1, metalness: 0.3, transparent: true, opacity: 0.65 });
+  const tireMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.9 });
+  const rimMat  = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.3, metalness: 0.8 });
+
+  /* Bus body */
+  const busGroup = new THREE.Group();
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(6, 1.8, 2.2), redMat);
+  body.position.set(0, 1.5, 0);
+  body.castShadow = true;
+  busGroup.add(body);
+
+  /* Yellow stripe */
+  const stripe = new THREE.Mesh(new THREE.BoxGeometry(6.02, 0.35, 2.22), yellowMat);
+  stripe.position.set(0, 2.05, 0);
+  busGroup.add(stripe);
+
+  /* Roof */
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(5.9, 0.12, 2.1), redMat);
+  roof.position.set(0, 2.45, 0);
+  busGroup.add(roof);
+
+  /* Front face */
+  const front = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.8, 2.2), darkMat);
+  front.position.set(3.1, 1.5, 0);
+  busGroup.add(front);
+
+  /* Back face */
+  const back = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.8, 2.2), redMat);
+  back.position.set(-3.1, 1.5, 0);
+  busGroup.add(back);
+
+  /* Windshield */
+  const wind = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.9, 1.6), glassMat);
+  wind.position.set(3.07, 1.7, 0);
+  busGroup.add(wind);
+
+  /* Side windows */
+  for (let i = -1.8; i <= 1.8; i += 1.2) {
+    const win = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.55, 0.05), glassMat);
+    win.position.set(i, 1.85, 1.12);
+    busGroup.add(win);
+    const win2 = win.clone();
+    win2.position.z = -1.12;
+    busGroup.add(win2);
+  }
+
+  /* Headlights */
+  const headL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.22, 0.4), new THREE.MeshStandardMaterial({ color: 0xffffcc, emissive: 0xffffaa, emissiveIntensity: 1.5 }));
+  headL.position.set(3.1, 1.25, 0.6);
+  busGroup.add(headL);
+  const headL2 = headL.clone();
+  headL2.position.z = -0.6;
+  busGroup.add(headL2);
+
+  /* Wheels */
+  const wheelGeo = new THREE.CylinderGeometry(0.45, 0.45, 0.3, 24);
+  const rimGeo   = new THREE.CylinderGeometry(0.22, 0.22, 0.32, 16);
+  const wheelPositions = [
+    [2.2, 0.45, 1.25], [2.2, 0.45, -1.25],
+    [-2.2, 0.45, 1.25], [-2.2, 0.45, -1.25]
+  ];
+  wheelPositions.forEach(([x,y,z]) => {
+    const w = new THREE.Mesh(wheelGeo, tireMat);
+    w.rotation.x = Math.PI / 2;
+    w.position.set(x, y, z);
+    w.castShadow = true;
+    busGroup.add(w);
+    const r = new THREE.Mesh(rimGeo, rimMat);
+    r.rotation.x = Math.PI / 2;
+    r.position.set(x, y, z + (z > 0 ? 0.02 : -0.02));
+    busGroup.add(r);
+  });
+
+  /* ANBESSA text plate */
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.35, 0.06), yellowMat);
+  plate.position.set(0, 0.8, 1.14);
+  busGroup.add(plate);
+
+  /* Undercarriage */
+  const under = new THREE.Mesh(new THREE.BoxGeometry(5.5, 0.2, 2.0), darkMat);
+  under.position.set(0, 0.6, 0);
+  busGroup.add(under);
+
+  /* Door */
+  const door = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.2, 0.9), darkMat);
+  door.position.set(3.08, 1.1, -0.4);
+  busGroup.add(door);
+
+  scene.add(busGroup);
+
+  /* Ground plane */
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(60, 60),
+    new THREE.MeshStandardMaterial({ color: 0x0a0000, roughness: 1 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  /* Road lines */
+  for (let i = -4; i <= 4; i += 2) {
+    const line = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.15, 8),
+      new THREE.MeshStandardMaterial({ color: 0xffc300, roughness: 1, transparent: true, opacity: 0.25 })
+    );
+    line.rotation.x = -Math.PI / 2;
+    line.position.set(i * 1.5, 0.01, -5);
+    scene.add(line);
+  }
+
+  /* Floating particles (3D) */
+  const ptGeo = new THREE.BufferGeometry();
+  const ptCount = 120;
+  const positions = [];
+  const ptColors = [];
+  for (let i = 0; i < ptCount; i++) {
+    positions.push((Math.random() - 0.5) * 40, Math.random() * 20, (Math.random() - 0.5) * 40);
+    const isY = Math.random() > 0.5;
+    ptColors.push(isY ? 1 : 0.84, isY ? 0.76 : 0.16, isY ? 0 : 0.16);
+  }
+  ptGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  ptGeo.setAttribute('color', new THREE.Float32BufferAttribute(ptColors, 3));
+  const ptMat = new THREE.PointsMaterial({ size: 0.1, vertexColors: true, transparent: true, opacity: 0.7 });
+  scene.add(new THREE.Points(ptGeo, ptMat));
+
+  /* Mouse interaction */
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  /* Animate */
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.012;
+
+    /* Bus gentle float + mouse tilt */
+    busGroup.position.y = Math.sin(t * 0.8) * 0.12;
+    busGroup.rotation.y = Math.sin(t * 0.4) * 0.08 + mouseX * 0.08;
+    busGroup.rotation.x = mouseY * 0.04;
+
+    /* Wheel spin */
+    wheelPositions.forEach((_, i) => {
+      const wIdx = 9 + i * 2;
+      if (busGroup.children[wIdx]) busGroup.children[wIdx].rotation.z += 0.04;
+    });
+
+    /* Lights pulse */
+    redL.intensity = 2.5 + Math.sin(t * 2) * 0.5;
+
+    /* Camera subtle orbit */
+    camera.position.x = 8 + Math.sin(t * 0.2) * 1.5;
+    camera.position.z = 12 + Math.cos(t * 0.15) * 1;
+    camera.lookAt(0, 1.2, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+/* ────────────────────────────────────────────────
+   THREE.JS — LION CANVAS (About section)
+──────────────────────────────────────────────── */
+(function initLion3D() {
+  const wrap = document.querySelector('.about-canvas-wrap');
+  const canvas = document.getElementById('lion-canvas');
+  const w = wrap.clientWidth, h = wrap.clientHeight || w;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 0, 7);
+
+  scene.add(new THREE.AmbientLight(0x200000, 2));
+  const dl = new THREE.DirectionalLight(0xffc300, 3);
+  dl.position.set(5, 8, 5);
+  scene.add(dl);
+  const rl = new THREE.PointLight(0xd62828, 4, 15);
+  rl.position.set(-3, 2, 3);
+  scene.add(rl);
+
+  /* Lion built from spheres and boxes */
+  const yellowM = new THREE.MeshStandardMaterial({ color: 0xffc300, roughness: 0.5 });
+  const maneM   = new THREE.MeshStandardMaterial({ color: 0xe6a800, roughness: 0.7, transparent: true, opacity: 0.85 });
+  const darkM   = new THREE.MeshStandardMaterial({ color: 0x1a0a00, roughness: 1 });
+  const redM    = new THREE.MeshStandardMaterial({ color: 0xd62828, roughness: 0.5 });
+  const eyeM    = new THREE.MeshStandardMaterial({ color: 0xffe066, emissive: 0xffc300, emissiveIntensity: 0.8 });
+
+  const lion = new THREE.Group();
+
+  /* Body */
+  const body = new THREE.Mesh(new THREE.SphereGeometry(1.1, 24, 24), yellowM);
+  body.scale.set(1.4, 1, 1.1);
+  body.position.set(-0.3, -0.5, 0);
+  lion.add(body);
+
+  /* Mane */
+  const mane = new THREE.Mesh(new THREE.SphereGeometry(1.05, 24, 24), maneM);
+  mane.position.set(0.8, 0.4, 0);
+  lion.add(mane);
+
+  /* Head */
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.75, 24, 24), yellowM);
+  head.position.set(0.8, 0.4, 0);
+  lion.add(head);
+
+  /* Eyes */
+  [-0.22, 0.22].forEach(z => {
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), eyeM);
+    eye.position.set(1.38, 0.6, z);
+    lion.add(eye);
+    const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 8), darkM);
+    pupil.position.set(1.44, 0.6, z);
+    lion.add(pupil);
+  });
+
+  /* Nose */
+  const nose = new THREE.Mesh(new THREE.SphereGeometry(0.13, 12, 12), redM);
+  nose.scale.set(1.2, 0.7, 0.6);
+  nose.position.set(1.5, 0.35, 0);
+  lion.add(nose);
+
+  /* Ears */
+  [-0.4, 0.4].forEach(z => {
+    const ear = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.35, 8), yellowM);
+    ear.rotation.z = z > 0 ? -0.3 : 0.3;
+    ear.position.set(0.9, 1.1, z * 1.5);
+    lion.add(ear);
+  });
+
+  /* Tail */
+  const tailGeo = new THREE.TorusGeometry(0.6, 0.07, 8, 24, Math.PI);
+  const tail = new THREE.Mesh(tailGeo, yellowM);
+  tail.position.set(-1.4, -0.2, 0);
+  tail.rotation.z = -0.5;
+  lion.add(tail);
+  const tailTip = new THREE.Mesh(new THREE.SphereGeometry(0.18, 12, 12), maneM);
+  tailTip.position.set(-1.95, 0.35, 0);
+  lion.add(tailTip);
+
+  /* Legs */
+  [[-0.8, -1.4, 0.4], [-0.8, -1.4, -0.4], [0.4, -1.2, 0.4], [0.4, -1.2, -0.4]].forEach(([x,y,z]) => {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.8, 10), yellowM);
+    leg.position.set(x, y, z);
+    lion.add(leg);
+  });
+
+  /* Ring text orbit */
+  const ringGeo = new THREE.TorusGeometry(1.8, 0.02, 6, 60);
+  const ring = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ color: 0xffc300, transparent: true, opacity: 0.3 }));
+  ring.rotation.x = Math.PI * 0.35;
+  lion.add(ring);
+
+  scene.add(lion);
+
+  /* Orbiting particles */
+  const orbGeo = new THREE.BufferGeometry();
+  const orbPos = [];
+  for (let i = 0; i < 60; i++) {
+    const a = (i / 60) * Math.PI * 2;
+    const r = 2.2 + Math.random() * 0.5;
+    orbPos.push(Math.cos(a) * r, (Math.random() - 0.5) * 1.5, Math.sin(a) * r);
+  }
+  orbGeo.setAttribute('position', new THREE.Float32BufferAttribute(orbPos, 3));
+  scene.add(new THREE.Points(orbGeo, new THREE.PointsMaterial({ size: 0.06, color: 0xffc300, transparent: true, opacity: 0.7 })));
+
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.015;
+    lion.rotation.y = Math.sin(t * 0.5) * 0.35;
+    lion.position.y = Math.sin(t * 0.8) * 0.1;
+    ring.rotation.z = t * 0.3;
+    rl.intensity = 3 + Math.sin(t * 2) * 1;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  const ro = new ResizeObserver(() => {
+    const nw = wrap.clientWidth, nh = wrap.clientHeight || nw;
+    renderer.setSize(nw, nh);
+  });
+  ro.observe(wrap);
+})();
+
+/* ────────────────────────────────────────────────
+   THREE.JS — CONTACT PARTICLES
+──────────────────────────────────────────────── */
+(function initContact3D() {
+  const section = document.getElementById('contact');
+  const canvas  = document.getElementById('contact-canvas');
+  const w = section.clientWidth, h = section.clientHeight || 500;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
+  camera.position.z = 8;
+
+  const geo = new THREE.BufferGeometry();
+  const cnt = 200;
+  const pos = [], col = [];
+  for (let i = 0; i < cnt; i++) {
+    pos.push((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
+    const y = Math.random() > 0.5;
+    col.push(y ? 1 : 0.84, y ? 0.76 : 0.16, y ? 0 : 0.16);
+  }
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.Float32BufferAttribute(col, 3));
+  const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.08, vertexColors: true, transparent: true, opacity: 0.8 }));
+  scene.add(pts);
+
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.008;
+    pts.rotation.y = t * 0.3;
+    pts.rotation.x = Math.sin(t * 0.5) * 0.15;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
